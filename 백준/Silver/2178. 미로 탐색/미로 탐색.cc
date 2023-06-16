@@ -1,42 +1,64 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define X first
-#define Y second
-
-string board[102];
-int dist[102][102];
-
 int n, m;
-int dx[4] = { 1,0,-1,0 };
-int dy[4] = { 0,1,0,-1 };
+int graph[100][100];
 
-int main(void) 
+// 이동할 네가지 방향 (상, 하, 좌, 우)
+int dx[4] = {-1, 1, 0, 0};
+int dy[4] = {0, 0, -1, 1};
+
+int bfs(int x, int y)
 {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-
-    cin >> n >> m;
-    for (int i = 0; i < n; i++)
-        cin >> board[i];
-    for (int i = 0; i < n; i++) 
-        fill(dist[i], dist[i] + m, -1);
-
-    queue<pair<int, int> > Q;
-
-    Q.push({ 0,0 });
-    dist[0][0] = 0;
-
-    while (!Q.empty()) {
-        auto cur = Q.front(); Q.pop();
-        for (int dir = 0; dir < 4; dir++) {
-            int nx = cur.X + dx[dir];
-            int ny = cur.Y + dy[dir];
-            if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
-            if (dist[nx][ny] >= 0 || board[nx][ny] != '1') continue;
-            dist[nx][ny] = dist[cur.X][cur.Y] + 1;
-            Q.push({ nx,ny });
+    queue<pair<int, int>> q;
+    q.push({x, y});
+    // 큐가 빌 때까지 반목
+    while (!q.empty())
+    {
+        int x = q.front().first;
+        int y = q.front().second;
+        q.pop();
+        // 현재 위치에서 4가지 방향으로 확인
+        for (int i = 0; i < 4; i++)
+        {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            // 미로 공간을 벗어난 경우 무시
+            if (nx < 0 || nx >= n || ny < 0 || ny >= m)
+            {
+                continue;
+            }
+            // 이동할 수 없는 칸인 경우 무시
+            if (graph[nx][ny] == 0)
+            {
+                continue;
+            }
+            // 처음 방문 & 이동 가능
+            if (graph[nx][ny] == 1)
+            {
+                graph[nx][ny] = graph[x][y] + 1;
+                q.push({nx, ny});
+            }
         }
     }
-    cout << dist[n - 1][m - 1] + 1; // 문제의 특성상 거리+1이 정답
+    // 가장 오른쪽 아래까지의 최단 거리 반환
+    return graph[n - 1][m - 1];
+}
+
+int main()
+{
+    // 입력 받기
+    cin >> n >> m;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            scanf("%1d", &graph[i][j]);
+        }
+    }
+
+    // 출력
+    cout << bfs(0, 0) << endl;
+
+    return 0;
 }
