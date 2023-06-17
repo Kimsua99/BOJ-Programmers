@@ -1,53 +1,71 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <queue>
+
 using namespace std;
 
-#define X first
-#define Y second
-
-int dist[305][305];
-
 int dx[8] = { 2, 1, -1, -2, -2, -1, 1, 2 };
-int dy[8] = { 1, 2, 2, 1, -1, -2, -2, -1 };
+int dy[8] = { 1, 2, 2, 1, -1, -2, -2, -1 };//(2,1) / (1,2) / (-1,2) / (-2,1) ...
+
+int board[305][305] = { 0 };
+bool vis[305][305] = { 0 };
 
 int t, n, x, y, xx, yy;
 
-queue <pair<int, int >> Q;
+queue <pair<int, int>> q; 
+void bfs(int n)
+{
+    while (!q.empty())
+    {
+        int curX = q.front().first;
+        int curY = q.front().second;
+        q.pop();
 
-int main(void) 
+        for (int i = 0; i < 8; i++)
+        {
+            int nx = curX + dx[i];
+            int ny = curY + dy[i];
+
+            if (nx < 0 || nx >= n || ny < 0 || ny >= n) 
+                continue;
+            if (board[nx][ny] >= 1 || vis[nx][ny] == true) 
+                continue;
+            board[nx][ny] = board[curX][curY] + 1;
+            q.push({ nx, ny });
+            vis[nx][ny] = true;
+        }
+    }
+}
+void reset()
+{
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            board[i][j] = 0;
+            vis[i][j] = 0;
+        }
+    }
+}
+
+int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
 
-    cin >> t;//테스트케이스 수
-    while (t--) 
+    cin >> t;
+
+    while (t--)
     {
-        cin >> n;//체스판의 한변의 길이
+        cin >> n;
+        cin >> x >> y;
+        cin >> xx >> yy;
 
-        for (int i = 0; i < n; i++) 
-            fill(dist[i], dist[i] + n, -1);//전체를 -1로 설정
+        board[x][y] = 1;
+        vis[x][y] = true;
+        q.push({ x,y });
 
-        cin >> x >> y;//현재 좌표
-
-        dist[x][y] = 0;
-        Q.push({ x, y });
-
-        cin >> xx >> yy;;//이동할 좌표
-
-        while (!Q.empty()) 
-        {
-            auto cur = Q.front(); Q.pop();//현재 좌표
-            for (int dir = 0; dir < 8; dir++) //이동 가능 지점이 8군데이므로 8번 반복
-            {
-                int nx = cur.X + dx[dir];
-                int ny = cur.Y + dy[dir];
-
-                if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
-                if (dist[nx][ny] >= 0) continue;
-
-                dist[nx][ny] = dist[cur.X][cur.Y] + 1;
-                Q.push({ nx, ny });
-            }
-        }
-        cout << dist[xx][yy] << "\n";
+        bfs(n);
+        cout << board[xx][yy] - 1 << '\n';
+        reset();
     }
 }
