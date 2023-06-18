@@ -63,13 +63,13 @@ int main()
 
     bfs();
 
-    for (int i = 0; i < n; i++)
+    for (int k = 0; k < h; k++)
     {
-        for (int j = 0; j < m; j++) 
+        for (int i = 0; i < n; i++)
         {
-            for (int k = 0; k < h; k++) 
+            for (int j = 0; j < m; j++)
             {
-                if (board[i][j][k] == 0) 
+                if (board[i][j][k] == 0)
                 {
                     cout << -1;
                     return 0;
@@ -78,8 +78,8 @@ int main()
                     day = max(board[i][j][k], day);
                 }
             }
-
         }
     }
+
     cout << day - 1;
 }
