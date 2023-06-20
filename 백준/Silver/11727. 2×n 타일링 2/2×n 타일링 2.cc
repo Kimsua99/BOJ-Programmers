@@ -1,23 +1,21 @@
-#include <iostream>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-int main()
+int n;
+int d[1010];
+int mod = 10007;
+
+int main(void)
 {
-	int n;
+	ios::sync_with_stdio(0);
+	cin.tie(0);
 
 	cin >> n;
 
-	int arr[1001] = {0};
+	d[1] = 1;
+	d[2] = 3;
 
-	arr[0] = 1;
-	arr[1] = 1;
-
-	for (int i = 2; i <= n; i++)
-	{
-		arr[i] = (arr[i - 1] + arr[i - 2] * 2) % 10007;
-	}
-	cout << arr[n];
-
-	return 0;
+	for (int i = 3; i <= n; ++i) 
+		d[i] = (d[i - 1] + d[i - 2] * 2) % mod;
+	cout << d[n];
 }
