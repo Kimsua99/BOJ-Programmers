@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int d[1005][3];
-int r[1005], g[1005], b[1005];
+int d[1005][3];//RGB
+int r[1005], g[1005], b[1005];//각 색깔 별 비용 담을 배열
 
 int main(void) 
 {
@@ -10,9 +10,10 @@ int main(void)
     cin.tie(0);
 
     int n;
+
     cin >> n;
 
-    for (int i = 1; i <= n; i++) 
+    for (int i = 1; i <= n; i++)
         cin >> r[i] >> g[i] >> b[i];
 
     d[1][0] = r[1];
