@@ -20,6 +20,6 @@ int main(void)
     {
         int N;
         cin >> N;
-        cout << fibo[N][0] << " " << fibo[N][1] << endl;
+        cout << fibo[N][0] << " " << fibo[N][1] << '\n';
     }
 }
