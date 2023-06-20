@@ -1,30 +1,29 @@
-#include <iostream>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-int main()
+int d[11];
+int t, n;
+
+int main(void) 
 {
-	int n;
-	int T;
+    ios::sync_with_stdio(0);
+    cin.tie(0);
 
-	int arr[10] = {};
 
-	arr[0] = 0;
-	arr[1] = 1;
-	arr[2] = 2;
-	arr[3] = 4;
+    d[1] = 1;
+    d[2] = 2;
+    d[3] = 4;
 
-	cin >> T;
+    for (int i = 4; i < 11; i++)
+    {
+        d[i] = d[i - 3] + d[i - 2] + d[i - 1];
+    }
 
-	for (int i = 4; i <= 11; i++)
-	{
-		arr[i] = arr[i - 3] + arr[i - 2] + arr[i - 1];
-	}
+    cin >> t;
 
-	for (int i = 0; i < T; i++)
-	{
-		cin >> n;
-		cout << arr[n] << "\n";
-	}
-	return 0;
+    while (t--)
+    {
+        cin >> n;
+        cout << d[n] << '\n';
+    }
 }
