@@ -1,36 +1,32 @@
-#include <iostream>
-
+#include <bits/stdc++.h>
 using namespace std;
-
-int main() 
+int main()
 {
-	int n;
-	int cnt = 0;
-	string str;
+    string s;
+    int n;
+    int cnt = 0;
 
-	cin >> n;
+    cin >> n;
 
-	for (int i = 0; i < n; i++) 
-	{
-		cin >> str;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> s;
+        bool isgroup = true;
+        s.erase(unique(s.begin(), s.end()), s.end());
+        sort(s.begin(), s.end());
 
-		bool checky = true;
+        for (int j = 0; j < s.size() - 1; j++)
+        {
+            if (s[j] == s[j + 1])
+            {
+                isgroup = false;
+                break;
+            }
+        }
+        if (isgroup)
+            cnt++;
+    }
 
-		for (int j = 0; j < str.length(); j++) 
-		{
-			for (int k = 0; k < j; k++) 
-			{
-				if (str[j] != str[j - 1] && str[j] == str[k]) 
-				{
-					checky = false;
-					break;
-				}
-			}
-		}
-		if (checky == true) cnt++;
-	}
-
-	cout << cnt;
-
-	return 0;
+    cout << cnt;
+    return 0;
 }
