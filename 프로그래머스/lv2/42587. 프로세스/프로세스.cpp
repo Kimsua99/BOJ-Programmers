@@ -1,31 +1,38 @@
 #include <string>
+#include <vector>
 #include <bits/stdc++.h>
-
 using namespace std;
 
 int solution(vector<int> pr, int location) 
 {
-    int i = 0;
-    int answer = pr.size();
-    while (true)
+    queue<int> q;                        
+    vector<int> v;     
+    
+    for(int i = 0; i < pr.size(); i++) 
     {
-        for (int j = i + 1; j < pr.size(); j++) 
+        q.push(i);//순서 큐에 넣음, 0123..
+    }
+    
+    while(!q.empty()) 
+    {
+        int tmp = q.front();
+        q.pop();
+        
+        if(pr[tmp] != *max_element(pr.begin(),pr.end()))
         {
-            if (pr[i] < pr[j]) 
-            {
-                pr.push_back(pr[i]);
-                
-                if (location == i) 
-                {
-                    location = pr.size() - 1;
-                }
-                break;
-            }
-        }
-        if (i == location) 
+            q.push(tmp);
+        } 
+        else 
         {
-            return answer - (pr.size() - i) + 1;
+            v.push_back(tmp);
+            cout << tmp <<'\n'; 
+            pr[tmp] = 0;
         }
-        i++;
+    }
+    
+    for(int i=0; i<v.size(); i++) 
+    {
+        if(v[i] == location)
+            return i+1;
     }
 }
