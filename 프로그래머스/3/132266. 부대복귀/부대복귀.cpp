@@ -11,14 +11,14 @@ vector<int> solution(int n, vector<vector<int>> roads, vector<int> sources, int 
     
     queue<pair<int, int>> q;
     
-    for(auto a : roads)//연결된 노드 돌면서 board 벡터에 넣어줌
+     for (int i = 0; i < roads.size(); ++i)
     {
-        board[a[0]].push_back(a[1]);
-        board[a[1]].push_back(a[0]);
+        board[roads[i][0]].push_back(roads[i][1]);
+        board[roads[i][1]].push_back(roads[i][0]);
     }
     
     q.push({dest, 0});//강철부대가 있는 최종 지점부터 큐에 넣어서 시작
-    cost[dest] = 0;
+    cost[dest] = 0;//목표 지점이 바로 부대 위치일 수도 있으므로 0으로 설정
     
     while (!q.empty()) 
     {
@@ -29,7 +29,7 @@ vector<int> solution(int n, vector<vector<int>> roads, vector<int> sources, int 
         
         for (auto nxt : board[curPos]) //현 지점과 연결된 노드
         {
-            if (cost[nxt] == -1 || cost[nxt] > curCost + 1)//아직 방문하지 않았거나 연결이 된 노드일 경우
+            if (cost[nxt] == -1)//아직 방문하지 않았거나 현재 비용+1보다 크면
             {
                 q.push({nxt, curCost + 1});//큐에 연결 노드 넣어주고 비용 +1 해줌
                 cost[nxt] = curCost + 1;
