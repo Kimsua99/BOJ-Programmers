@@ -1,26 +1,41 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
+
 using namespace std;
 
-int main(void) {
-  ios::sync_with_stdio(0);
-  cin.tie(0);
+int main()
+{
+	int n;
 
-  int N;
-  unsigned int t;
-  priority_queue<unsigned int> pq;
+	cin >> n;
+	priority_queue<int> pq;
+	vector<int>v;
+	pq.push(0);
 
-  cin >> N;
-  for (int i = 0; i < N; i++) {
-    cin >> t;
-    if (t)
-      pq.push(t);
-    else {
-      if (pq.empty())
-        cout << "0\n";
-      else {
-        cout << pq.top() << '\n';
-        pq.pop();
-      }
-    }
-  }
+	for (int i = 0; i < n; i++)
+	{
+		int x;
+		cin >> x;
+
+		if (x == 0)
+		{
+			if (pq.empty())
+			{
+				v.push_back(0);
+			}
+			else
+			{
+				v.push_back(pq.top());
+				pq.pop();
+			}
+		}
+		else
+		{
+			pq.push(x);
+		}
+	}
+
+	for (int i = 0; i < v.size(); i++)
+	{
+		cout << v[i] << '\n';
+	}
 }
