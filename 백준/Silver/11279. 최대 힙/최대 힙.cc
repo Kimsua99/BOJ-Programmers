@@ -19,9 +19,7 @@ int main()
 		if (x == 0)
 		{
 			if (pq.empty())
-			{
 				v.push_back(0);
-			}
 			else
 			{
 				v.push_back(pq.top());
@@ -29,13 +27,9 @@ int main()
 			}
 		}
 		else
-		{
 			pq.push(x);
-		}
 	}
 
 	for (int i = 0; i < v.size(); i++)
-	{
 		cout << v[i] << '\n';
-	}
 }
