@@ -5,6 +5,7 @@ bool flag = false;
 string s = "";
 int ans;
 string st;
+
 int main(void)
 {
 	cin >> s;
@@ -27,7 +28,7 @@ int main(void)
 		else
 		{
 			st += s[i];
-		} 
+		}
 		if (s[i] == '-')
 			flag = true;
 	}
