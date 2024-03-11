@@ -1,0 +1,29 @@
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int answer = 0;
+bool visited[8] = { 0 };//1차원 배열, 모두 0으로 세팅한다.
+
+void dfs(int cnt, int k, vector<vector<int>> dungeons) //던전을 완전탐색으로 순회해야 하므로 dfs 사용
+{
+	if (cnt > answer)
+		answer = cnt;
+
+	for (int i = 0; i < dungeons.size(); i++)
+	{
+		if (visited[i] == false && dungeons[i][0] <= k)
+		{
+			visited[i] = true;
+			dfs(cnt + 1, k - dungeons[i][1], dungeons);
+			visited[i] = false;
+		}
+	}
+}
+
+int solution(int k, vector<vector<int>> dungeons)
+{
+	dfs(0, k, dungeons);
+	return answer;
+}
